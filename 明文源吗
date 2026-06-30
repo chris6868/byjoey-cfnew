@@ -1,5 +1,5 @@
 // CFnew - 终端 v2.9.8c
-// 版本: v2.9.8c 
+// 版本: v2.9.8c
 import { connect as 连接 } from 'cloudflare:sockets';
 const 基础64文本解码器 = new TextDecoder();
 function 解码64(文本) {
@@ -38,7 +38,7 @@ const 远程配置网址 = 'https://raw.githubusercontent.com/byJoey/test/refs/h
 let 启用优选域名 = true; // 优选域名默认关闭
 let 启用优选地址 = true;
 let 启用仓库优选 = true;
-let 启用原生地址 = false; // 原生地址默认关闭          
+let 启用原生地址 = false; // 原生地址默认关闭
 
 let 键值存储 = null;
 let 键值配置 = {};
@@ -2645,15 +2645,26 @@ async function 处理订阅请求(请求507, 用户506, 网址505 = null) {
     const 加密客户端问候域名499 = 自定义加密客户端问候域名 || 'cloudflare-ech.com';
     加密客户端问候配置501 = `${加密客户端问候域名499}+${域名系统值500}`;
   }
-  async function 添加节点列表来源列表(列表498) {
-    if (启用明文) {
-      最终链接列表.push(...生成链接列表来源源(列表498, 用户506, 工作器域名504, 加密客户端问候配置501, false, 别名命名器502));
-    }
-    if (启用木马) {
-      最终链接列表.push(...(await 生成木马链接列表来源源(列表498, 用户506, 工作器域名504, 加密客户端问候配置501, false, 别名命名器502)));
-    }
-    if (启用扩展传输) {
-      最终链接列表.push(...生成扩展超文本链接列表来源源(列表498, 用户506, 工作器域名504, 加密客户端问候配置501, false, 别名命名器502));
+  async function 添加节点列表来源列表(列表498, 是新地址 = false) {
+    for (const 项目 of 列表498) {
+      const 单个列表 = [项目];
+      if (启用明文) {
+        if (是新地址) {
+          最终链接列表.push(...生成链接列表来源新地址列表(单个列表, 用户506, 工作器域名504, 加密客户端问候配置501, false, 别名命名器502));
+        } else {
+          最终链接列表.push(...生成链接列表来源源(单个列表, 用户506, 工作器域名504, 加密客户端问候配置501, false, 别名命名器502));
+        }
+      }
+      if (启用木马) {
+        if (是新地址) {
+          最终链接列表.push(...(await 生成木马链接列表来源新地址列表(单个列表, 用户506, 工作器域名504, 加密客户端问候配置501, false, 别名命名器502)));
+        } else {
+          最终链接列表.push(...(await 生成木马链接列表来源源(单个列表, 用户506, 工作器域名504, 加密客户端问候配置501, false, 别名命名器502)));
+        }
+      }
+      if (启用扩展传输) {
+        最终链接列表.push(...生成扩展超文本链接列表来源源(单个列表, 用户506, 工作器域名504, 加密客户端问候配置501, false, 别名命名器502));
+      }
     }
   }
   if (启用原生地址) {
@@ -2739,15 +2750,7 @@ async function 处理订阅请求(请求507, 用户506, 网址505 = null) {
       try {
         const 新地址列表 = await 获取值解析新地址列表();
         if (新地址列表.length > 0) {
-          if (启用明文) {
-            最终链接列表.push(...生成链接列表来源新地址列表(新地址列表, 用户506, 工作器域名504, 加密客户端问候配置501, false, 别名命名器502));
-          }
-          if (启用木马) {
-            最终链接列表.push(...(await 生成木马链接列表来源新地址列表(新地址列表, 用户506, 工作器域名504, 加密客户端问候配置501, false, 别名命名器502)));
-          }
-          if (启用扩展传输) {
-            最终链接列表.push(...生成扩展超文本链接列表来源源(新地址列表, 用户506, 工作器域名504, 加密客户端问候配置501, false, 别名命名器502));
-          }
+          await 添加节点列表来源列表(新地址列表, true);
         }
       } catch (错误486) {
         if (!当前工作器地区) {
@@ -5230,7 +5233,7 @@ async function 处理订阅值(请求241, 用户240 = null) {
                                 <input type="text" id="yxURL" placeholder="${是否值236 ? 'URL منبع لیست IP ترجیحی را وارد کنید' : '输入优选IP列表来源URL'}" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #00f0ff; color: #00f0ff; font-family: 'Courier New', monospace; font-size: 14px;">
                                 <small style="color: #7aa9c4; font-size: 0.85rem;">${是否值236 ? 'URL منبع لیست IP ترجیحی سفارشی، اگر خالی بگذارید از آدرس پیش‌فرض استفاده می‌شود' : '自定义优选IP列表来源URL，留空则使用默认地址'}</small>
                         </div>
-                        
+
                         <div style="margin-bottom: 20px; padding: 15px; background: rgba(20, 5, 50, 0.6); border: 2px solid #7aa9c4; border-radius: 8px;">
                             <h4 style="color: #00f0ff; margin: 0 0 15px 0; font-size: 1.1rem; text-shadow: 0 0 5px #00f0ff;">⚡ ${翻译值.latencyTest}</h4>
                             <div style="display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; align-items: center;">
@@ -5434,7 +5437,7 @@ async function 处理订阅值(请求241, 用户240 = null) {
                 </div>
                 <div id="statusMessage" style="display: none; padding: 10px; margin: 10px 0; border: 1px solid #00f0ff; background: rgba(8, 4, 28, 0.8); color: #00f0ff; text-shadow: 0 0 5px #00f0ff;"></div>
             </div>
-            
+
             <div class="card">
                     <h2 class="card-title">${翻译值.relatedLinks}</h2>
                 <div style="text-align: center; margin: 20px 0;">
