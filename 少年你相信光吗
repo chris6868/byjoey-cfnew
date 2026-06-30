@@ -1,1 +1,388 @@
-import{connect as _0x51}from'cloudflare:sockets';const _0x12=new TextDecoder();const _0x13=new TextEncoder();function _0x14(_0x15){return _0x12.decode(Uint8Array.from(atob(_0x15),c=>c.charCodeAt(0)))}let _0x1=null,_0x2={},_0x3=0,_0x4='351c9981-04b6-4103-aa4b-864aa9c91469',_0x5='',_0x6='',_0x7='',_0x8='',_0x9=!0,_0x10=!0,_0x11=!1,_0x16=!0,_0x17=!1,_0x18=!1,_0x19=!1,_0x20='https://223.5.5.5/dns-query',_0x21='cloudflare-ech.com';const _0x22={wk:'',ev:'yes',et:'no',ex:'no',ech:'no',tp:'',customDNS:'https://223.5.5.5/dns-query',customECHDomain:'cloudflare-ech.com',alpn:'',d:'',p:'',yx:'',yxURL:'',s:'',homepage:'',scu:_0x14('aHR0cHM6Ly91cmwudjEubWsvc3Vi'),ena:'no',epd:'yes',epi:'yes',egi:'yes',ae:'',rm:'',qj:'',dkby:'no',yxby:'',ipv4:'yes',ipv6:'yes',ispMobile:'yes',ispUnicom:'yes',ispTelecom:'yes'};function _0x23(_0x24,_0x25=!1){if(!_0x24)return _0x25;const s=String(_0x24).toLowerCase();return['yes','true','1','on'].includes(s)?!0:['no','false','0','off'].includes(s)?!1:_0x25}function _0x26(_0x27,_0x28=undefined){const v=_0x2[_0x27]!==undefined?_0x2[_0x27]:_0x28;return _0x23(v,_0x28===!0)}async function _0x29(){if(!_0x1)return;if(_0x3>0&&Date.now()-_0x3<30000)return;try{const v=await _0x1.get('c_ver')||'';const d=await _0x1.get('c');if(d)_0x2=JSON.parse(d);_0x3=Date.now()}catch(e){_0x2={}}}function _0x30(_0x31){const r4=/^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;const r6=/^(?:[0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$/;return r4.test(_0x31)||r6.test(_0x31)}function _0x32(_0x33=!1){const ctr={};return(it)=>{let b='';const hn=String(it?.ip||it?.domain||'').trim().replace(/^\[([^\]]+)\]$/,'$1');if(hn.includes(':'))b='IPv6优选';else if(!_0x30(hn))b='优选域名';else{let isp=String(it?.isp||it?.name||'').trim()||'IPv4优选';isp=isp.replace(/\s+/g,'_');const colo=String(it?.colo||'').trim().replace(/\s+/g,'_');b=colo?`${isp}-${colo}`:isp}if(_0x33)return b;ctr[b]=(ctr[b]||0)+1;return`${b}-${String(ctr[b]).padStart(2,'0')}`}}async function _0x40(req,u,h){const f=[];const d=h.hostname;const namer=_0x32(!1);const ech=_0x19?`${_0x21}+${_0x20}`:null;async function _0x_add(l,isN=!1){for(const i of l){const s=[i];if(_0x26('ev',!0)){if(isN)f.push(..._0x41(s,u,d,ech,namer));else f.push(..._0x42(s,u,d,ech,namer))}if(_0x26('et',!1)){if(isN)f.push(...(await _0x43(s,u,d,ech,namer)));else f.push(...(await _0x44(s,u,d,ech,namer)))}if(_0x26('ex',!1)){f.push(..._0x45(s,u,d,ech,namer))}}}if(_0x26('ena',!1))await _0x_add([{ip:d,isp:'原生地址'}]);if(!_0x26('yxby',!1)){if(_0x26('epd',!0))await _0x_add([{domain:'speed.cloudflare.com',name:'优选域名'}]);if(_0x26('epi',!0)){try{const l=await _0x46();if(l.length>0)await _0x_add(l);}catch(e){}}}if(f.length===0)f.push('vless://00000000-0000-0000-0000-000000000000@127.0.0.1:80?security=none&type=ws#NoNodes');const t=h.searchParams.get('target')||'base64';let res,ct='text/plain;charset=utf-8';if(t==='clash')res=_0x47(f),ct='text/yaml';else if(t==='singbox')res=_0x48(f),ct='application/json';else res=btoa(f.join('\n'));return new Response(res,{headers:{'Content-Type':ct}})}function _0x42(l,u,d,e,n){return l.map(it=>`vless://${u}@${it.ip.includes(':')?`[${it.ip}]`:it.ip}:443?encryption=none&security=tls&sni=${d}&fp=chrome&type=ws&host=${d}&path=%2F%3Fed%3D2048#${encodeURIComponent(n(it))}`)}function _0x41(l,u,d,e,n){return _0x42(l,u,d,e,n)}async function _0x44(l,u,d,e,n){const p=_0x34('tp',u);return l.map(it=>`trojan://${p}@${it.ip.includes(':')?`[${it.ip}]`:it.ip}:443?security=tls&sni=${d}&fp=chrome&type=ws&host=${d}&path=%2F%3Fed%3D2048#${encodeURIComponent(n(it))}`)}async function _0x43(l,u,d,e,n){return await _0x44(l,u,d,e,n)}function _0x45(l,u,d,e,n){const nodeP=u.substring(0,8);return l.map(it=>`vless://${u}@${it.ip.includes(':')?`[${it.ip}]`:it.ip}:443?encryption=none&security=tls&sni=${d}&fp=chrome&type=xhttp&host=${d}&path=%2F${nodeP}&mode=stream-one#${encodeURIComponent(n(it))}`)}async function _0x46(){try{const r=await fetch('https://www.wetest.vip/page/cloudflare/address_v4.html');const p=await r.text();const res=[];const m=p.matchAll(/<td data-label="线路名称">(.+?)<\/td>[\s\S]*?<td data-label="优选地址">([\d.:a-fA-F]+)<\/td>[\s\S]*?<td data-label="数据中心">(.+?)<\/td>/g);for(const v of m)res.push({isp:v[1].trim(),ip:v[2].trim(),colo:v[3].trim()});return res}catch(e){return[]}}function _0x47(l){let res='proxies:\n';l.forEach(x=>{try{const u=new URL(x);res+=`  - name: "${decodeURIComponent(u.hash.substring(1))}"\n    type: ${u.protocol.slice(0,-1)}\n    server: ${u.hostname}\n    port: ${u.port}\n    uuid: ${u.username}\n    tls: true\n    network: ws\n    ws-opts: {path: "/", headers: {Host: ${u.hostname}}}\n`}catch(e){}});return res}function _0x48(l){const o=l.map(x=>{try{const u=new URL(x);return{type:u.protocol.slice(0,-1),tag:decodeURIComponent(u.hash.substring(1)),server:u.hostname,server_port:parseInt(u.port),uuid:u.username,tls:{enabled:!0}}}catch(e){return null}}).filter(Boolean);return JSON.stringify({outbounds:o},null,2)}const _0xUI=_0x14('PCFET0NUWVBFIGh0bWw+PGh0bWw+PGhlYWQ+PHRpdGxlPkNGbmV3IFRlcm1pbmFsPC90aXRsZT48c3R5bGU+Ym9keXtiYWNrZ3JvdW5kOiMwNTAzMGU7Y29sb3I6IzAwZjBmZjtmb250LWZhbWlseTptb25vc3BhY2U7cGFkZGluZzoyMHB4fS5nbGl0Y2h7dGV4dC1zaGFkb3c6MnB4IDAgI2ZmMmJkNiwgLTJweCAwICMwMGZmOWR9PC9zdHlsZT48L2hlYWQ+PGJvZHk+PGgxIGNsYXNzPSJnbGl0Y2giPk5JR0hUIENJVFlIPC9oMT48ZGl2IGlkPSJ0ZXJtaW5hbCI+W1N5c3RlbSBPbmxpbmVdPGJyPlJPT1Q6fiQgY29ubmVjdCAuLi48L2Rpdj48L2JvZHk+PC9odG1sPg==');export default{async fetch(q,env,ctx){try{if(env.C){_0x1=env.C;await _0x29()}_0x4=(env.u||env.U||_0x4).toLowerCase();const u=new URL(q.url);if(u.pathname.includes('/sub'))return await _0x40(q,_0x4,u);if(u.pathname==='/'||u.pathname==='')return new Response(_0xUI,{headers:{'Content-Type':'text/html'}});return new Response('NIGHT CITY')}catch(e){return new Response(e.toString(),{status:500})}}}
+import { connect as _0x1 } from 'cloudflare:sockets';
+const _0x2 = new TextDecoder();
+const _0x3 = new TextEncoder();
+function _0x4(_0x5) {
+  const _0x6 = atob(_0x5);
+  const _0x7 = new Uint8Array(_0x6.length);
+  for (let i = 0; i < _0x6.length; i++) _0x7[i] = _0x6.charCodeAt(i);
+  return _0x2.decode(_0x7);
+}
+let _0x8 = '351c9981-04b6-4103-aa4b-864aa9c91469',
+  _0x9 = '',
+  _0xa = '',
+  _0xb = [],
+  _0xc = [],
+  _0xd = !1,
+  _0xe = !1,
+  _0xf = !1,
+  _0x10 = !0,
+  _0x11 = '',
+  _0x12 = '',
+  _0x13 = '',
+  _0x14 = '',
+  _0x15 = !0,
+  _0x16 = !1,
+  _0x17 = !1,
+  _0x18 = '',
+  _0x19 = !1,
+  _0x1a = 'https://223.5.5.5/dns-query',
+  _0x1b = 'cloudflare-ech.com',
+  _0x1c = '',
+  _0x1d = _0x4('aHR0cHM6Ly91cmwudjEubWsvc3Vi');
+const _0x1e = 'https://raw.githubusercontent.com/byJoey/test/refs/heads/main/tist.ini';
+let _0x1f = !0,
+  _0x20 = !0,
+  _0x21 = !0,
+  _0x22 = !1,
+  _0x23 = null,
+  _0x24 = {},
+  _0x25 = 0,
+  _0x26 = 30000,
+  _0x27 = '';
+const _0x28 = {
+  wk: '',
+  ev: 'yes',
+  et: 'no',
+  ex: 'no',
+  ech: 'no',
+  tp: '',
+  customDNS: 'https://223.5.5.5/dns-query',
+  customECHDomain: 'cloudflare-ech.com',
+  alpn: '',
+  d: '',
+  p: '',
+  yx: '',
+  yxURL: '',
+  s: '',
+  homepage: '',
+  scu: _0x4('aHR0cHM6Ly91cmwudjEubWsvc3Vi'),
+  ena: 'no',
+  epd: 'yes',
+  epi: 'yes',
+  egi: 'yes',
+  ae: '',
+  rm: '',
+  qj: '',
+  dkby: 'no',
+  yxby: '',
+  ipv4: 'yes',
+  ipv6: 'yes',
+  ispMobile: 'yes',
+  ispUnicom: 'yes',
+  ispTelecom: 'yes'
+};
+function _0x29(_0x2a, _0x2b = !1) {
+  if (!_0x2a) return _0x2b;
+  const s = String(_0x2a).toLowerCase();
+  return ['yes', 'true', '1', 'on'].includes(s) ? !0 : ['no', 'false', '0', 'off'].includes(s) ? !1 : _0x2b;
+}
+function _0x2c(_0x2d, _0x2e = !1) {
+  return _0x29(_0x2d, _0x2e) ? 'yes' : 'no';
+}
+function _0x2f(_0x30, _0x31 = !1, _0x32 = undefined) {
+  const v = _0x24[_0x30] !== undefined ? _0x24[_0x30] : (_0x32 !== undefined ? _0x32 : (_0x31 ? 'yes' : 'no'));
+  return _0x29(v, _0x31);
+}
+function _0x33(_0x34, _0x35 = '', _0x36 = undefined) {
+  const v = _0x24[_0x34] !== undefined ? _0x24[_0x34] : (_0x36 !== undefined ? _0x36 : _0x35);
+  return v === undefined || v === null ? _0x35 : String(v);
+}
+function _0x37(_0x38) {
+  const s = {
+    ..._0x28,
+    ..._0x38
+  };
+  ['ev', 'et', 'ex', 'ech', 'ena', 'epd', 'epi', 'egi', 'ipv4', 'ipv6', 'ispMobile', 'ispUnicom', 'ispTelecom'].forEach(k => {
+    s[k] = _0x2c(s[k], _0x29(_0x28[k]));
+  });
+  if (s.ev === 'no' && s.et === 'no' && s.ex === 'no') s.ev = 'yes';
+  if (s.ech === 'yes') s.dkby = 'yes';
+  return s;
+}
+async function _0x39() {
+  if (!_0x23) return;
+  if (_0x25 > 0 && Date.now() - _0x25 < _0x26) return;
+  try {
+    const v = await _0x23.get('c_ver') || '';
+    if (v && v === _0x27 && _0x24 && Object.keys(_0x24).length > 0) {
+      _0x25 = Date.now();
+      return;
+    }
+    const d = await _0x23.get('c');
+    if (d) _0x24 = JSON.parse(d);
+    _0x27 = v;
+    _0x25 = Date.now();
+  } catch (e) {
+    if (!_0x24) _0x24 = {};
+  }
+}
+async function _0x3a() {
+  if (!_0x23) return;
+  try {
+    await _0x23.put('c', JSON.stringify(_0x24));
+    const n = String(Date.now());
+    _0x27 = n;
+    await _0x23.put('c_ver', n);
+    _0x25 = Date.now();
+  } catch (e) {}
+}
+async function _0x3b(_0x3c) {
+  try {
+    const c = _0x3c.cf?.country;
+    if (c) {
+      const m = {
+        'US': 'US',
+        'SG': 'SG',
+        'JP': 'JP',
+        'KR': 'KR',
+        'DE': 'DE',
+        'SE': 'SE',
+        'NL': 'NL',
+        'FI': 'FI',
+        'GB': 'GB'
+      };
+      if (m[c]) return m[c];
+    }
+    return 'SG';
+  } catch (e) {
+    return 'SG';
+  }
+}
+function _0x3d(_0x3e) {
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(_0x3e);
+}
+function _0x3f(_0x40) {
+  const r4 = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+  if (r4.test(_0x40)) return !0;
+  const r6 = /^(?:[0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$/;
+  return r6.test(_0x40);
+}
+function _0x41(_0x42 = !1) {
+  const ctr = {};
+  return it => {
+    let b = '';
+    const hn = String(it?.ip || it?.domain || '').trim().replace(/^\[([^\]]+)\]$/, '$1');
+    if (hn.includes(':')) b = 'IPv6优选';
+    else if (!_0x3f(hn)) b = '优选域名';
+    else {
+      let isp = String(it?.isp || it?.name || '').trim() || 'IPv4优选';
+      isp = isp.replace(/\s+/g, '_');
+      const colo = String(it?.colo || '').trim().replace(/\s+/g, '_');
+      b = colo ? `${isp}-${colo}` : isp;
+    }
+    if (_0x42) return b;
+    ctr[b] = (ctr[b] || 0) + 1;
+    return `${b}-${String(ctr[b]).padStart(2, '0')}`;
+  };
+}
+async function _0x43(req, u, h) {
+  const f = [];
+  const d = h.hostname;
+  const namer = _0x41(!1);
+  const ech = _0x19 ? `${_0x1b}+${_0x1a}` : null;
+  async function _0x_add(l, isN = !1) {
+    for (const it of l) {
+      const s = [it];
+      if (_0x2f('ev', !0)) {
+        if (isN) f.push(..._0x44(s, u, d, ech, namer));
+        else f.push(..._0x45(s, u, d, ech, namer));
+      }
+      if (_0x2f('et', !1)) {
+        if (isN) f.push(...(await _0x46(s, u, d, ech, namer)));
+        else f.push(...(await _0x47(s, u, d, ech, namer)));
+      }
+      if (_0x2f('ex', !1)) {
+        f.push(..._0x48(s, u, d, ech, namer));
+      }
+    }
+  }
+  if (_0x2f('ena', !1)) await _0x_add([{
+    ip: d,
+    isp: '原生地址'
+  }]);
+  if (!_0x2f('yxby', !1)) {
+    if (_0x2f('epd', !0)) await _0x_add([{
+      domain: 'speed.cloudflare.com',
+      name: '优选域名'
+    }]);
+    if (_0x2f('epi', !0)) {
+      try {
+        const l = await _0x49();
+        if (l.length > 0) await _0x_add(l);
+      } catch (e) {}
+    }
+    if (_0x2f('egi', !0)) {
+      try {
+        const l = await _0x4a();
+        if (l.length > 0) await _0x_add(l, !0);
+      } catch (e) {}
+    }
+  }
+  if (f.length === 0) f.push('vless://00000000-0000-0000-0000-000000000000@127.0.0.1:80?security=none&type=ws#NoNodes');
+  const t = h.searchParams.get('target') || 'base64';
+  let res, ct = 'text/plain;charset=utf-8';
+  if (t === 'clash') res = _0x4b(f), ct = 'text/yaml';
+  else if (t === 'singbox') res = _0x4c(f), ct = 'application/json';
+  else if (t === 'surge') res = _0x4d(f), ct = 'text/plain';
+  else if (t === 'quanx') res = _0x4e(f), ct = 'text/plain';
+  else res = btoa(f.join('\n'));
+  return new Response(res, {
+    headers: {
+      'Content-Type': ct
+    }
+  });
+}
+function _0x45(l, u, d, e, n) {
+  return l.map(it => `vless://${u}@${it.ip.includes(':') ? `[${it.ip}]` : it.ip}:443?encryption=none&security=tls&sni=${d}&fp=chrome&type=ws&host=${d}&path=%2F%3Fed%3D2048#${encodeURIComponent(n(it))}`);
+}
+function _0x44(l, u, d, e, n) {
+  return _0x45(l, u, d, e, n);
+}
+async function _0x47(l, u, d, e, n) {
+  const p = _0x33('tp', u);
+  return l.map(it => `trojan://${p}@${it.ip.includes(':') ? `[${it.ip}]` : it.ip}:443?security=tls&sni=${d}&fp=chrome&type=ws&host=${d}&path=%2F%3Fed%3D2048#${encodeURIComponent(n(it))}`);
+}
+async function _0x46(l, u, d, e, n) {
+  return await _0x47(l, u, d, e, n);
+}
+function _0x48(l, u, d, e, n) {
+  const nodeP = u.substring(0, 8);
+  return l.map(it => `vless://${u}@${it.ip.includes(':') ? `[${it.ip}]` : it.ip}:443?encryption=none&security=tls&sni=${d}&fp=chrome&type=xhttp&host=${d}&path=%2F${nodeP}&mode=stream-one#${encodeURIComponent(n(it))}`);
+}
+async function _0x49() {
+  try {
+    const r = await fetch('https://www.wetest.vip/page/cloudflare/address_v4.html');
+    const p = await r.text();
+    const res = [];
+    const m = p.matchAll(/<td data-label="线路名称">(.+?)<\/td>[\s\S]*?<td data-label="优选地址">([\d.:a-fA-F]+)<\/td>[\s\S]*?<td data-label="数据中心">(.+?)<\/td>/g);
+    for (const v of m) res.push({
+      isp: v[1].trim(),
+      ip: v[2].trim(),
+      colo: v[3].trim()
+    });
+    return res;
+  } catch (e) {
+    return [];
+  }
+}
+async function _0x4a() {
+  if (!_0x14) return [];
+  try {
+    const r = await fetch('https://raw.githubusercontent.com/byJoey/test/heads/main/tist.ini');
+    if (!r.ok) return [];
+    const t = await r.text();
+    const res = [];
+    t.split('\n').forEach(l => {
+      const v = l.trim().match(/^([^:]+):(\d+)#(.*)$/);
+      if (v) res.push({
+        ip: v[1],
+        port: parseInt(v[2]),
+        name: v[3]
+      });
+    });
+    return res;
+  } catch (e) {
+    return [];
+  }
+}
+function _0x4b(l) {
+  let res = 'proxies:\n';
+  l.forEach(x => {
+    try {
+      const u = new URL(x);
+      res += `  - name: "${decodeURIComponent(u.hash.substring(1))}"\n    type: ${u.protocol.slice(0, -1)}\n    server: ${u.hostname}\n    port: ${u.port}\n    uuid: ${u.username}\n    tls: true\n    network: ws\n    ws-opts: {path: "/", headers: {Host: ${u.hostname}}}\n`;
+    } catch (e) {}
+  });
+  return res;
+}
+function _0x4c(l) {
+  const o = l.map(x => {
+    try {
+      const u = new URL(x);
+      return {
+        type: u.protocol.slice(0, -1),
+        tag: decodeURIComponent(u.hash.substring(1)),
+        server: u.hostname,
+        server_port: parseInt(u.port),
+        uuid: u.username,
+        tls: {
+          enabled: !0
+        }
+      };
+    } catch (e) {
+      return null;
+    }
+  }).filter(Boolean);
+  return JSON.stringify({
+    outbounds: o
+  }, null, 2);
+}
+function _0x4d(l) {
+  return l.join('\n');
+}
+function _0x4e(l) {
+  return l.join('\n');
+}
+const _0xUI = _0x4('PCFET0NUWVBFIGh0bWw+PGh0bWw+PGhlYWQ+PG1ldGEgY2hhcnNldD0iVVRGLTgiPjx0aXRsZT5DRm5ldyBUZXJtaW5hbDwvdGl0bGU+PHN0eWxlPmJvZHliYWNrZ3JvdW5kOiMwNTAzMGU7Y29sb3I6IzAwZjBmZjtmb250LWZhbWlseTptb25vc3BhY2U7cGFkZGluZzoyMHB4fS5nbGl0Y2h7dGV4dC1zaGFkb3c6MnB4IDAgI2ZmMmJkNiwgLTJweCAwICMwMGZmOWR9PC9zdHlsZT48L2hlYWQ+PGJvZHk+PGgxIGNsYXNzPSJnbGl0Y2giPk5JR0hUIENJVFlIPC9oMT48ZGl2IGlkPSJ0ZXJtaW5hbCI+W1N5c3RlbSBPbmxpbmVdPGJyPlJPT1Q6fiQgY29ubmVjdCAuLi48L2Rpdj48L2JvZHk+PC9odG1sPg==');
+export default {
+  async fetch(q, env, ctx) {
+    try {
+      if (env.C) {
+        _0x23 = env.C;
+        await _0x39();
+      }
+      _0x8 = (env.u || env.U || _0x8).toLowerCase();
+      const u = new URL(q.url);
+      if (u.pathname.includes('/sub')) return await _0x43(q, _0x8, u);
+      if (u.pathname === '/' || u.pathname === '') return new Response(_0xUI, {
+        headers: {
+          'Content-Type': 'text/html'
+        }
+      });
+      if (u.pathname.includes('/api/config')) {
+        if (q.method === 'GET') return new Response(JSON.stringify(_0x37(env)));
+        if (q.method === 'POST') {
+          const n = await q.json();
+          _0x24 = {
+            ..._0x24,
+            ...n
+          };
+          await _0x3a();
+          return new Response('OK');
+        }
+      }
+      if (q.headers.get('Upgrade') === 'websocket') {
+        const p = new WebSocketPair();
+        const [c, s] = Object.values(p);
+        s.accept();
+        s.addEventListener('message', async ev => {
+          const d = ev.data;
+          const sock = _0x51({
+            hostname: '1.1.1.1',
+            port: 443
+          });
+          const writer = sock.writable.getWriter();
+          await writer.write(d);
+          const reader = sock.readable.getReader();
+          while (1) {
+            const {
+              done: o,
+              value: v
+            } = await reader.read();
+            if (o) break;
+            s.send(v);
+          }
+        });
+        return new Response(null, {
+          status: 101,
+          webSocket: c
+        });
+      }
+      return new Response('NIGHT CITY');
+    } catch (e) {
+      return new Response(e.toString(), {
+        status: 500
+      });
+    }
+  }
+};
